@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SplitFlapText from "@/components/SplitFlapText";
 import BorderGlow from "@/components/BorderGlow";
 import ColorBends from "@/components/ColorBends";
@@ -138,12 +137,19 @@ export default function Home() {
           <nav aria-label={language === "ru" ? "Основная навигация" : "Primary navigation"}>
             <a href="#about">{copy.nav[0]}</a><a href="#work">{copy.nav[1]}</a><a href="#writing">{copy.nav[2]}</a><a href="#contact">{copy.nav[3]}</a>
           </nav>
-          <Tabs className="lang-tabs" value={language} onValueChange={(value) => setLanguage(value as Language)}>
-            <TabsList className="lang-list" variant="line" aria-label={language === "ru" ? "Выбор языка" : "Choose language"}>
-              <TabsTrigger className="lang-trigger" value="en">EN</TabsTrigger>
-              <TabsTrigger className="lang-trigger" value="ru">RU</TabsTrigger>
-            </TabsList>
-          </Tabs>
+          <div className="lang-list" role="group" aria-label={language === "ru" ? "Выбор языка" : "Choose language"}>
+            {(["en", "ru"] as const).map((code) => (
+              <button
+                key={code}
+                type="button"
+                className="lang-trigger"
+                aria-pressed={language === code}
+                onClick={() => setLanguage(code)}
+              >
+                {code.toUpperCase()}
+              </button>
+            ))}
+          </div>
         </div>
       </header>
 
