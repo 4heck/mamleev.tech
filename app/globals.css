@@ -195,7 +195,7 @@ main[data-language="ru"] h1 { font-size: clamp(3.6rem, 5.8vw, 7rem); }
   border: 1px solid var(--blue);
   background: rgba(36, 87, 255, .07);
 }
-.editorial-photo img { width: 100%; aspect-ratio: 1 / 1; display: block; object-fit: cover; object-position: 62% 18%; filter: saturate(.85) contrast(1.04); }
+.editorial-photo img { width: 100%; aspect-ratio: 5 / 6; display: block; object-fit: cover; object-position: 62% 18%; filter: saturate(.85) contrast(1.04); }
 .editorial-photo figcaption { margin-top: 10px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .about-columns { display: grid; grid-template-columns: repeat(2, 1fr); gap: 38px; max-width: 900px; margin-top: 42px; padding-top: 24px; border-top: 1px solid var(--line); }
 .about-columns p { margin: 0; color: var(--muted); font-size: 16px; line-height: 1.65; }
