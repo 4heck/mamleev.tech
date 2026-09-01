@@ -67,7 +67,7 @@ nav a:hover, .footer-links a:hover { color: var(--blue); }
   transition: color .2s ease, background-color .2s ease;
 }
 .lang-trigger:hover { color: var(--ink); }
-.lang-trigger[aria-pressed="true"] { background: var(--ink); color: var(--paper-bright); }
+.lang-trigger[aria-current="page"] { background: var(--ink); color: var(--paper-bright); }
 
 .hero {
   display: grid;
