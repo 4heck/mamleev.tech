@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "../globals.css";
 import { buildMetadata, profileSchema } from "@/lib/metadata";
 import YandexMetrika from "@/components/YandexMetrika";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 // One root layout per locale (no app/layout.tsx) so <html lang> is correct in
 // the served HTML instead of being patched by the client.
@@ -17,6 +18,7 @@ export default function EnLayout({ children }: Readonly<{ children: React.ReactN
           dangerouslySetInnerHTML={{ __html: JSON.stringify(profileSchema("en")) }}
         />
         <YandexMetrika />
+        <GoogleAnalytics />
       </body>
     </html>
   );

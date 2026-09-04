@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "../globals.css";
 import { buildMetadata, profileSchema } from "@/lib/metadata";
 import YandexMetrika from "@/components/YandexMetrika";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 export const metadata: Metadata = buildMetadata("ru");
 
@@ -15,6 +16,7 @@ export default function RuLayout({ children }: Readonly<{ children: React.ReactN
           dangerouslySetInnerHTML={{ __html: JSON.stringify(profileSchema("ru")) }}
         />
         <YandexMetrika />
+        <GoogleAnalytics />
       </body>
     </html>
   );
