@@ -362,3 +362,64 @@ main[data-language="ru"] h1 { font-size: clamp(3.6rem, 5.8vw, 7rem); }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* The Selected grid places the tall article card in column one and stacks the
+   short cards beside it; a fourth card has no partner, so it spans the row. */
+.feature-card--wide { grid-column: 1 / -1; min-height: 260px; }
+.feature-card--wide h2 { font-size: clamp(1.7rem, 2.1vw, 2.7rem); }
+.section-more {
+  display: inline-flex;
+  gap: 8px;
+  margin-top: 22px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 3px;
+}
+
+/* Writing route */
+.writing-page { padding-bottom: 0; }
+.writing-intro { padding-block: 72px 44px; border-bottom: 1px solid var(--line); }
+.writing-intro h1 { margin: 18px 0 20px; font-size: clamp(2.6rem, 6vw, 5rem); line-height: .96; letter-spacing: -.05em; }
+.writing-intro .hero-lede { max-width: 720px; }
+.writing-list { display: flex; flex-direction: column; gap: 18px; padding-block: 44px 72px; }
+.writing-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  padding: 34px;
+  border: 1px solid var(--line);
+  background: var(--paper-bright);
+}
+.writing-entry h2 { margin: 16px 0 0; font-size: clamp(1.6rem, 2.6vw, 2.6rem); line-height: 1.04; letter-spacing: -.04em; }
+.writing-summary { margin: 14px 0 0; max-width: 760px; font-size: 15px; line-height: 1.6; opacity: .78; }
+.writing-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 18px 26px;
+  margin: 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+.writing-facts dt {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 9px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.writing-facts dd { margin: 7px 0 0; font-size: 13px; line-height: 1.5; }
+.writing-entry-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; }
+.writing-stats { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.writing-stats li {
+  border: 1px solid var(--line);
+  padding: 9px 13px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .feature-card--wide { min-height: 300px; }
+  .writing-entry { padding: 24px; }
+}

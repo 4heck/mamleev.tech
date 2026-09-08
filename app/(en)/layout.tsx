@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "../globals.css";
-import { buildMetadata, profileSchema } from "@/lib/metadata";
+import { buildMetadata } from "@/lib/metadata";
 import YandexMetrika from "@/components/YandexMetrika";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 
@@ -13,10 +13,6 @@ export default function EnLayout({ children }: Readonly<{ children: React.ReactN
     <html lang="en">
       <body>
         {children}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(profileSchema("en")) }}
-        />
         <YandexMetrika />
         <GoogleAnalytics />
       </body>

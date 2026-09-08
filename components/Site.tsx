@@ -1,14 +1,15 @@
 import SplitFlapText from "@/components/SplitFlapText";
 import BorderGlow from "@/components/BorderGlow";
 import ColorBends from "@/components/ColorBends";
+import { SiteHeader, SiteFooter } from "@/components/Chrome";
 import {
   content,
   localePath,
-  LANGUAGES,
   motionColors,
-  socialLinks,
+  publications,
   systemWords,
   tech,
+  writingPath,
   type Language,
 } from "@/lib/content";
 
@@ -17,6 +18,17 @@ import {
 export default function Site({ language }: { language: Language }) {
   const copy = content[language];
   const basePath = localePath[language];
+
+  // Publications lead the Selected grid, newest first, so the strongest piece
+  // of writing is the first thing in the section the nav points at.
+  const cards = [
+    ...publications.map((item) => ({
+      className: item.cardClassName,
+      href: item.href,
+      ...copy.pubs[item.slug as keyof typeof copy.pubs],
+    })),
+    ...copy.features,
+  ];
 
   return (
     <>
@@ -38,29 +50,7 @@ export default function Site({ language }: { language: Language }) {
             transparent
           />
           <main data-language={language}>
-          <header className="site-header shell">
-            <a className="wordmark" href={`${basePath}#top`} aria-label="Ruslan Mamleev — home">
-              <span className="wordmark-mark">RM</span><span className="wordmark-domain">mamleev.tech</span>
-            </a>
-            <div className="header-actions">
-              <nav aria-label={language === "ru" ? "Основная навигация" : "Primary navigation"}>
-                <a href={`${basePath}#about`}>{copy.nav[0]}</a><a href={`${basePath}#work`}>{copy.nav[1]}</a><a href={`${basePath}#writing`}>{copy.nav[2]}</a><a href={`${basePath}#contact`}>{copy.nav[3]}</a>
-              </nav>
-              <div className="lang-list">
-                {LANGUAGES.map((code) => (
-                  <a
-                    key={code}
-                    className="lang-trigger"
-                    href={localePath[code]}
-                    hrefLang={code}
-                    aria-current={language === code ? "page" : undefined}
-                  >
-                    {code.toUpperCase()}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </header>
+          <SiteHeader language={language} />
 
           <section className="hero shell" id="top">
             <div className="hero-copy">
@@ -160,11 +150,14 @@ export default function Site({ language }: { language: Language }) {
 
           <section className="selected shell section-grid" id="writing">
             <div className="section-kicker"><span>03</span> {copy.selectedLabel}</div>
-            <div className="section-body selected-grid">{copy.features.map((item) => (
+            <div className="section-body">
+            <div className="selected-grid">{cards.map((item) => (
               <a className={`feature-card ${item.className}`} href={item.href} target="_blank" rel="noreferrer" key={item.title}>
                 <div className="feature-meta"><span>{item.meta[0]}</span><span>{item.meta[1]}</span></div><h2>{item.title}</h2><p>{item.text}</p><span className="feature-link">{item.action} <span aria-hidden="true">↗</span></span>
               </a>
             ))}</div>
+            <a className="section-more" href={writingPath[language]}>{copy.allWriting} <span aria-hidden="true">→</span></a>
+            </div>
           </section>
 
           <section className="toolkit shell" aria-label={copy.toolkit}><p>{copy.toolkit}</p><div className="tool-list">{tech.map((item) => <span key={item}>{item}</span>)}</div></section>
@@ -174,7 +167,7 @@ export default function Site({ language }: { language: Language }) {
             <div className="contact-actions"><a href="https://t.me/touchup" target="_blank" rel="noreferrer">{copy.telegram} <span aria-hidden="true">↗</span></a><a href="https://www.linkedin.com/in/ruslan-mamleev-948550227/" target="_blank" rel="noreferrer">{copy.linkedin} <span aria-hidden="true">↗</span></a></div>
           </section>
 
-            <footer className="footer shell"><p>© 2026 {copy.footer}</p><div className="footer-links">{socialLinks.map(([label, href]) => <a key={label} href={href} target="_blank" rel="noreferrer">{label} <span aria-hidden="true">↗</span></a>)}</div></footer>
+            <SiteFooter language={language} />
           </main>
     </>
   );
