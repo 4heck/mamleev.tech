@@ -19,11 +19,13 @@ export default function Site({ language }: { language: Language }) {
   const copy = content[language];
   const basePath = localePath[language];
 
-  // Publications lead the Selected grid, newest first, so the strongest piece
-  // of writing is the first thing in the section the nav points at.
+  // The two newest publications lead the Selected grid; the full list is one
+  // link away on the writing page. The grid is composed for exactly two: a tall
+  // card beside two stacked ones. Styling follows position rather than the
+  // article, so a new post takes the large card without touching the others.
   const cards = [
-    ...publications.map((item) => ({
-      className: item.cardClassName,
+    ...publications.slice(0, 2).map((item, index) => ({
+      className: index === 0 ? "article-card" : "dark-card",
       href: item.href,
       ...copy.pubs[item.slug as keyof typeof copy.pubs],
     })),

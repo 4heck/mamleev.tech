@@ -29,17 +29,22 @@ export type Publication = {
   datePublished: string;
   dateModified: string;
   readingMinutes: number;
-  cardClassName: string;
 };
 
 export const publications: Publication[] = [
+  {
+    slug: "depth-map-png",
+    href: "https://habr.com/ru/articles/1081340/",
+    datePublished: "2026-09-11T17:44:22+03:00",
+    dateModified: "2026-09-11T17:46:51+03:00",
+    readingMinutes: 22,
+  },
   {
     slug: "json-schema-monaco",
     href: "https://habr.com/ru/articles/1078548/",
     datePublished: "2026-09-04T16:58:48+03:00",
     dateModified: "2026-09-04T19:25:08+03:00",
     readingMinutes: 13,
-    cardClassName: "article-card",
   },
   {
     slug: "infrastructure-map",
@@ -47,7 +52,6 @@ export const publications: Publication[] = [
     datePublished: "2026-06-23T12:51:18+03:00",
     dateModified: "2026-06-23T12:54:49+03:00",
     readingMinutes: 7,
-    cardClassName: "dark-card",
   },
 ];
 
@@ -84,6 +88,16 @@ export const content = {
     ],
     allWriting: "All publications",
     pubs: {
+      "depth-map-png": {
+        meta: ["Graphics case", "GetFloorPlan · 2026"],
+        title: "How we packed an apartment's geometry into a plain PNG",
+        text: "Our tours are path-traced in Unreal Engine and reach the browser as flat panoramas, with no geometry to measure against. How we added a ruler anyway: a depth map packed into a PNG, the maths from cursor to 3D point, and what the PNG really cost.",
+        action: "Read on Habr",
+        stats: ["2.4K+ views on day one", "22 min read", "Deep dive with code"],
+        topics: ["WebGL", "three.js", "Depth maps", "PNG", "Unreal Engine"],
+        result: "A millimetre-accurate ruler over photoreal panoramas, with no 3D scene shipped to the browser",
+        venue: "Habr",
+      },
       "json-schema-monaco": {
         meta: ["Architecture case", "GetFloorPlan · 2026"],
         title: "Releases no longer need developers. They need JSON Schema and Monaco",
@@ -156,6 +170,16 @@ export const content = {
     ],
     allWriting: "Все публикации",
     pubs: {
+      "depth-map-png": {
+        meta: ["Кейс по графике", "GetFloorPlan · 2026"],
+        title: "Как мы засунули геометрию квартиры в обычный PNG",
+        text: "Наши туры рендерятся в Unreal Engine с трассировкой пути и приходят в браузер плоскими панорамами — мерить в них не по чему. Как мы всё равно сделали линейку: карта глубины в PNG, математика от курсора до точки в пространстве и честный счёт за PNG.",
+        action: "Читать на Habr",
+        stats: ["2.4K+ просмотров в первый день", "22 минуты", "Разбор с кодом"],
+        topics: ["WebGL", "three.js", "Карты глубины", "PNG", "Unreal Engine"],
+        result: "Линейка с миллиметровой точностью по фотореалистичным панорамам — без 3D-сцены в браузере",
+        venue: "Habr",
+      },
       "json-schema-monaco": {
         meta: ["Технический кейс", "GetFloorPlan · 2026"],
         title: "Разработчики больше не нужны для релиза. Нужны JSON Schema и Monaco",
