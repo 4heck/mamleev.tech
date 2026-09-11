@@ -27,6 +27,11 @@ body {
 main {
   position: relative;
   z-index: 1;
+  /* BorderGlow's .edge-light deliberately extends past its card so the glow can
+     bleed, and on narrow screens that reaches past the viewport — the page
+     scrolled sideways on phones even with the glow invisible. clip, not
+     hidden: it trims the overflow without creating a scroll container. */
+  overflow-x: clip;
   background: linear-gradient(180deg, rgba(240, 238, 229, .46), rgba(240, 238, 229, .58));
 }
 .site-color-bends {
