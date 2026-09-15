@@ -20,6 +20,12 @@ export const writingPath: Record<Language, string> = {
   ru: "/ru/writing/",
 };
 
+// Each publication has its own summary page under the writing route, in both
+// locales, so the language switcher can stay on the same article.
+export function articlePath(slug: string): Record<Language, string> {
+  return { en: `${writingPath.en}${slug}/`, ru: `${writingPath.ru}${slug}/` };
+}
+
 // Locale-independent facts about each publication. Dates and reading times are
 // the ones Habr reports for the article; view counts are a snapshot, not a live
 // number, so they live in the per-locale copy as plain text.
@@ -29,6 +35,9 @@ export type Publication = {
   datePublished: string;
   dateModified: string;
   readingMinutes: number;
+  // When the summary page on this site went live; drives its sitemap entry and
+  // Article dates, which are separate from the Habr original's.
+  summaryPublished: string;
 };
 
 export const publications: Publication[] = [
@@ -38,6 +47,7 @@ export const publications: Publication[] = [
     datePublished: "2026-09-11T17:44:22+03:00",
     dateModified: "2026-09-11T17:46:51+03:00",
     readingMinutes: 22,
+    summaryPublished: "2026-09-15T12:00:00+03:00",
   },
   {
     slug: "json-schema-monaco",
@@ -45,6 +55,7 @@ export const publications: Publication[] = [
     datePublished: "2026-09-04T16:58:48+03:00",
     dateModified: "2026-09-04T19:25:08+03:00",
     readingMinutes: 13,
+    summaryPublished: "2026-09-15T12:00:00+03:00",
   },
   {
     slug: "infrastructure-map",
@@ -52,6 +63,7 @@ export const publications: Publication[] = [
     datePublished: "2026-06-23T12:51:18+03:00",
     dateModified: "2026-06-23T12:54:49+03:00",
     readingMinutes: 7,
+    summaryPublished: "2026-09-15T12:00:00+03:00",
   },
 ];
 
@@ -67,6 +79,7 @@ export const content = {
     system: ["PRODUCT", "PLATFORM", "TEAM", "SYSTEMS / ONLINE"],
     signals: ["AI & PropTech", "Distributed systems", "Engineering leadership", "Architecture mentoring"],
     aboutLabel: "About",
+    aboutByline: "Ruslan Mamleev · CTO at GetFloorPlan · Kazan",
     aboutStatement: "My job is to make complexity manageable:\nshape the architecture, build the team,\nand keep technology aligned with what the business actually needs.",
     aboutColumns: [
       "I have worked with legacy systems and greenfield products, from cloud platforms managing thousands of IoT devices to AI-driven visualization pipelines.",
@@ -130,6 +143,15 @@ export const content = {
       venueLabel: "Published on",
       authorLabel: "Author",
       authorName: "Ruslan Mamleev · CTO & Software Architect",
+      readSummary: "Read the summary",
+      allPublications: "All publications",
+      homeCrumb: "Home",
+      breadcrumbLabel: "Breadcrumb",
+      originalLabel: "Original",
+      originalLink: "Full article on Habr",
+      readingOnHabr: "on Habr",
+      sectionLabels: ["The problem", "The decision", "The outcome", "Takeaways"],
+      summaryNote: "This page is my own summary for English readers. The full article, with code, diagrams and measurements, is published in Russian on Habr.",
     },
     toolkit: "Technology I work with",
     contactLabel: "Contact",
@@ -149,6 +171,7 @@ export const content = {
     system: ["ПРОДУКТ", "ПЛАТФОРМА", "КОМАНДА", "СИСТЕМЫ / В РАБОТЕ"],
     signals: ["AI и PropTech", "Распределённые системы", "Управление разработкой", "Наставничество по архитектуре"],
     aboutLabel: "Обо мне",
+    aboutByline: "Руслан Фаилевич Мамлеев · CTO GetFloorPlan · Казань",
     aboutStatement: "Моя задача — сделать сложность управляемой:\nспроектировать архитектуру, собрать команду\nи удерживать технологии в связке с реальными потребностями бизнеса.",
     aboutColumns: [
       "Работал и с легаси, и с продуктами с нуля: от облачных платформ, управляющих тысячами IoT-устройств, до AI-конвейеров визуализации недвижимости.",
@@ -212,6 +235,15 @@ export const content = {
       venueLabel: "Площадка",
       authorLabel: "Автор",
       authorName: "Руслан Мамлеев · CTO и архитектор ПО",
+      readSummary: "Читать разбор",
+      allPublications: "Все публикации",
+      homeCrumb: "Главная",
+      breadcrumbLabel: "Навигационная цепочка",
+      originalLabel: "Оригинал",
+      originalLink: "Полная статья на Habr",
+      readingOnHabr: "на Habr",
+      sectionLabels: ["Проблема", "Решение", "Результат", "Выводы"],
+      summaryNote: "Это краткий авторский разбор. Полная статья — с кодом, схемами и замерами — опубликована на Habr.",
     },
     toolkit: "Технологии, с которыми я работаю",
     contactLabel: "Контакты",

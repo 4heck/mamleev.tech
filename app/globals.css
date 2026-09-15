@@ -97,7 +97,7 @@ h1 {
   line-height: .91;
   letter-spacing: -.075em;
 }
-main[data-language="ru"] h1 { font-size: clamp(3.6rem, 5.8vw, 7rem); }
+main[data-language="ru"] .hero h1 { font-size: clamp(3.6rem, 5.8vw, 7rem); }
 .hero-lede {
   max-width: 720px;
   margin: 34px 0 0;
@@ -344,7 +344,7 @@ main[data-language="ru"] h1 { font-size: clamp(3.6rem, 5.8vw, 7rem); }
   .shell { width: calc(100% - 28px); }
   .site-header { min-height: 72px; }
   h1 { font-size: clamp(3.45rem, 17vw, 5.4rem); }
-  main[data-language="ru"] h1 { font-size: clamp(2.9rem, 13.5vw, 4.6rem); }
+  main[data-language="ru"] .hero h1 { font-size: clamp(2.9rem, 13.5vw, 4.6rem); }
   .hero { padding-block: 58px; }
   .hero-flap { right: 14px; left: 14px; justify-content: center; font-size: clamp(13px, 4vw, 18px) !important; }
   .hero-lede { font-size: 1.05rem; }
@@ -431,4 +431,58 @@ main[data-language="ru"] h1 { font-size: clamp(3.6rem, 5.8vw, 7rem); }
 @media (max-width: 900px) {
   .feature-card--wide { min-height: 300px; }
   .writing-entry { padding: 24px; }
+}
+
+/* About byline: the full name sits in a quiet author line, so the display type
+   around it keeps the short form of the name. */
+.about-byline {
+  margin: 0 0 18px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Publication summary pages */
+.breadcrumbs { padding-top: 28px; }
+.breadcrumbs ol { display: flex; flex-wrap: wrap; gap: 6px 10px; margin: 0; padding: 0; list-style: none; font-size: 12px; color: var(--muted); }
+.breadcrumbs li { min-width: 0; }
+.breadcrumbs li + li::before { content: "/"; margin-right: 10px; opacity: .6; }
+.breadcrumbs a { border-bottom: 1px solid var(--line); transition: color .2s ease; }
+.breadcrumbs a:hover { color: var(--blue); }
+.breadcrumbs [aria-current] { color: var(--ink); }
+.article { padding-block: 40px 72px; }
+.article-head { display: flex; flex-direction: column; gap: 22px; padding-bottom: 36px; border-bottom: 1px solid var(--line); }
+.article-head h1 { margin: 0; max-width: 22ch; font-size: clamp(2.2rem, 5vw, 4.4rem); line-height: .98; letter-spacing: -.05em; overflow-wrap: break-word; }
+.article-head .hero-lede { max-width: 760px; margin: 0; }
+.article-head .writing-facts a { border-bottom: 1px solid var(--line); }
+.article-body { max-width: 760px; }
+.article-body section { padding-top: 44px; }
+.article-body h2 { margin: 14px 0 18px; font-size: clamp(1.5rem, 2.4vw, 2.2rem); line-height: 1.08; letter-spacing: -.035em; }
+.article-body p { margin: 0 0 16px; font-size: 17px; line-height: 1.7; }
+.article-original {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  max-width: 760px;
+  margin-top: 40px;
+  padding: 30px;
+  border: 1px solid var(--line);
+  background: var(--paper-bright);
+}
+.article-original p { margin: 0; font-size: 15px; line-height: 1.6; }
+.article .section-more { margin-top: 36px; }
+
+@media (max-width: 900px) {
+  /* Long Russian words such as «инфраструктуру» split mid-word at the desktop
+     clamp minimum on a 390px screen. */
+  .article-head h1 { font-size: clamp(1.8rem, 7.6vw, 2.6rem); }
+  /* On a phone the current crumb would wrap onto its own line and repeat the
+     H1 directly below it; the parent links stay, and the BreadcrumbList in the
+     structured data still carries all three levels. */
+  .breadcrumbs li[aria-current] { display: none; }
+  .article-original { padding: 22px; }
+  .article-body p { font-size: 16px; }
 }

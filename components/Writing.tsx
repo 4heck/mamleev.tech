@@ -1,5 +1,5 @@
 import { SiteHeader, SiteFooter } from "@/components/Chrome";
-import { content, localePath, publications, writingPath, type Language } from "@/lib/content";
+import { articlePath, content, localePath, publications, writingPath, type Language } from "@/lib/content";
 
 // Standalone route for the publications, so each article has a stable place on
 // this domain that carries its own metadata instead of only a card anchor on
@@ -34,7 +34,7 @@ export default function Writing({ language }: { language: Language }) {
               <div className="writing-entry-head">
                 <div className="feature-meta"><span>{text.meta[0]}</span><span>{text.meta[1]}</span></div>
                 <h2>
-                  <a href={item.href} target="_blank" rel="noreferrer">{text.title}</a>
+                  <a href={articlePath(item.slug)[language]}>{text.title}</a>
                 </h2>
                 <p className="writing-summary">{text.text}</p>
               </div>
@@ -70,8 +70,8 @@ export default function Writing({ language }: { language: Language }) {
                 <ul className="writing-stats">
                   {text.stats.map((stat) => <li key={stat}>{stat}</li>)}
                 </ul>
-                <a className="button button-primary" href={item.href} target="_blank" rel="noreferrer">
-                  {text.action} <span aria-hidden="true">↗</span>
+                <a className="button button-primary" href={articlePath(item.slug)[language]}>
+                  {copy.writing.readSummary} <span aria-hidden="true">→</span>
                 </a>
               </div>
             </article>

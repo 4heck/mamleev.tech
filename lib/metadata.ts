@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { SITE_URL, content, localePath, publications, writingPath, type Language } from "./content";
+import { SITE_URL, articlePath, content, localePath, publications, writingPath, type Language } from "./content";
+import { summaries } from "./articles";
 
 // Per-locale snippet copy. The root page keeps the name in both scripts so it
 // can match Cyrillic name queries; the Russian page is written in Russian
@@ -18,7 +19,7 @@ const seo = {
   ru: {
     title: "Руслан Мамлеев — CTO, Software Architect & Tech Mentor",
     description:
-      "Персональный сайт Руслана Мамлеева — CTO GetFloorPlan, software architect и IT-ментор. AI, PropTech, распределённые системы, Python, Go и Kubernetes.",
+      "Руслан Фаилевич Мамлеев — CTO GetFloorPlan, software architect и IT-ментор. AI, PropTech, распределённые системы, Python, Go и Kubernetes.",
     ogTitle: "Руслан Мамлеев — CTO & Software Architect",
     ogDescription:
       "Технический руководитель в AI, PropTech, IoT и распределённых системах.",
@@ -31,14 +32,14 @@ const writingSeo = {
   en: {
     title: "Writing — Ruslan Mamleev",
     description:
-      "Engineering writing by Ruslan Mamleev, CTO at GetFloorPlan: configuration-driven platform architecture, and mapping startup infrastructure with AI agents.",
+      "Engineering writing by Ruslan Mamleev, CTO at GetFloorPlan: depth maps packed into PNG, a configuration contract instead of client forks, and a living infrastructure map.",
     ogTitle: "Writing — Ruslan Mamleev",
     ogDescription: "Architecture decisions from a product already running in production.",
   },
   ru: {
     title: "Публикации — Руслан Мамлеев",
     description:
-      "Технические статьи Руслана Мамлеева, CTO GetFloorPlan: платформа конфигураций вместо клиентских форков и живая карта инфраструктуры на ИИ-агентах.",
+      "Технические статьи Руслана Мамлеева, CTO GetFloorPlan: карта глубины в PNG, контракт конфигурации вместо клиентских форков и живая карта инфраструктуры.",
     ogTitle: "Публикации — Руслан Мамлеев",
     ogDescription: "Архитектурные решения в продукте, который уже работает в проде.",
   },
@@ -121,7 +122,7 @@ const person = {
   name: "Ruslan Mamleev",
   givenName: "Ruslan",
   familyName: "Mamleev",
-  additionalName: "Failovich",
+  additionalName: "Failevich",
   alternateName: ["Руслан Мамлеев", "Руслан Фаилевич Мамлеев", "4heck"],
   identifier: "4heck",
   jobTitle: "Chief Technology Officer",
@@ -246,15 +247,108 @@ export function writingSchema(language: Language) {
         isPartOf: { "@id": `${SITE_URL}${localePath[language]}` },
         mainEntity: {
           "@type": "ItemList",
-          itemListElement: nodes.map((node, index) => ({
+          itemListElement: publications.map((item, index) => ({
             "@type": "ListItem",
             position: index + 1,
-            url: node.url,
+            url: `${SITE_URL}${articlePath(item.slug)[language]}`,
           })),
         },
       },
       person,
       ...nodes,
+    ],
+  };
+}
+
+function findPublication(slug: string) {
+  const item = publications.find((entry) => entry.slug === slug);
+  if (!item) throw new Error(`Unknown publication: ${slug}`);
+  return item;
+}
+
+// Summary pages are their own short pieces, based on the Habr articles rather
+// than copies of them, so they get their own canonical, dates and Article node.
+export function articleMetadata(language: Language, slug: string): Metadata {
+  const item = findPublication(slug);
+  const copy = content[language];
+  const text = copy.pubs[slug as keyof typeof copy.pubs];
+  const summary = summaries[slug][language];
+  const paths = articlePath(slug);
+  const author = language === "ru" ? "Руслан Мамлеев" : "Ruslan Mamleev";
+
+  return {
+    title: `${text.title} — ${author}`,
+    description: summary.description,
+    keywords: [...text.topics, author, "GetFloorPlan"],
+    authors: [{ name: author, url: SITE_URL }],
+    alternates: {
+      canonical: paths[language],
+      languages: { en: paths.en, ru: paths.ru, "x-default": paths.en },
+    },
+    openGraph: {
+      type: "article",
+      url: paths[language],
+      siteName: "Ruslan Mamleev",
+      locale: seo[language].locale,
+      title: text.title,
+      description: summary.description,
+      publishedTime: item.summaryPublished,
+      modifiedTime: item.summaryPublished,
+      authors: [SITE_URL],
+      tags: text.topics,
+      images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: seo[language].imageAlt }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: text.title,
+      description: summary.description,
+      images: ["/og-image.jpg"],
+    },
+  };
+}
+
+// The page's TechArticle is based on the Habr original, which stays in the
+// graph under its own @id so both resolve to the same Person as author.
+export function articleSchema(language: Language, slug: string) {
+  const item = findPublication(slug);
+  const copy = content[language];
+  const text = copy.pubs[slug as keyof typeof copy.pubs];
+  const summary = summaries[slug][language];
+  const pageUrl = `${SITE_URL}${articlePath(slug)[language]}`;
+  const original = articleNodes(language).filter((node) => node["@id"] === item.href);
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "@id": `${pageUrl}#article`,
+        url: pageUrl,
+        mainEntityOfPage: pageUrl,
+        headline: text.title,
+        description: summary.description,
+        abstract: summary.lede,
+        inLanguage: language,
+        datePublished: item.summaryPublished,
+        dateModified: item.summaryPublished,
+        author: { "@id": PERSON_ID },
+        publisher: { "@id": PERSON_ID },
+        about: text.topics,
+        keywords: text.topics.join(", "),
+        image: `${SITE_URL}/og-image.jpg`,
+        isBasedOn: { "@id": item.href },
+        isPartOf: { "@type": "CollectionPage", url: `${SITE_URL}${writingPath[language]}` },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: copy.writing.homeCrumb, item: `${SITE_URL}${localePath[language]}` },
+          { "@type": "ListItem", position: 2, name: copy.writing.title, item: `${SITE_URL}${writingPath[language]}` },
+          { "@type": "ListItem", position: 3, name: text.title, item: pageUrl },
+        ],
+      },
+      person,
+      ...original,
     ],
   };
 }

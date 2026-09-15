@@ -3,6 +3,7 @@ import BorderGlow from "@/components/BorderGlow";
 import ColorBends from "@/components/ColorBends";
 import { SiteHeader, SiteFooter } from "@/components/Chrome";
 import {
+  articlePath,
   content,
   localePath,
   motionColors,
@@ -25,11 +26,14 @@ export default function Site({ language }: { language: Language }) {
   // article, so a new post takes the large card without touching the others.
   const cards = [
     ...publications.slice(0, 2).map((item, index) => ({
-      className: index === 0 ? "article-card" : "dark-card",
-      href: item.href,
       ...copy.pubs[item.slug as keyof typeof copy.pubs],
+      className: index === 0 ? "article-card" : "dark-card",
+      // Internal first: the summary page on this domain, which then links out.
+      href: articlePath(item.slug)[language],
+      action: copy.writing.readSummary,
+      external: false,
     })),
-    ...copy.features,
+    ...copy.features.map((feature) => ({ ...feature, external: true })),
   ];
 
   return (
@@ -103,6 +107,7 @@ export default function Site({ language }: { language: Language }) {
             <div className="section-body about-body">
               <div className="about-composition">
                 <div className="about-copy">
+                  <p className="about-byline">{copy.aboutByline}</p>
                   <h2 className="about-statement">{copy.aboutStatement}</h2>
                   <div className="about-columns">{copy.aboutColumns.map((item) => <p key={item}>{item}</p>)}</div>
                 </div>
@@ -154,8 +159,8 @@ export default function Site({ language }: { language: Language }) {
             <div className="section-kicker"><span>03</span> {copy.selectedLabel}</div>
             <div className="section-body">
             <div className="selected-grid">{cards.map((item) => (
-              <a className={`feature-card ${item.className}`} href={item.href} target="_blank" rel="noreferrer" key={item.title}>
-                <div className="feature-meta"><span>{item.meta[0]}</span><span>{item.meta[1]}</span></div><h2>{item.title}</h2><p>{item.text}</p><span className="feature-link">{item.action} <span aria-hidden="true">↗</span></span>
+              <a className={`feature-card ${item.className}`} href={item.href} {...(item.external ? { target: "_blank", rel: "noreferrer" } : {})} key={item.title}>
+                <div className="feature-meta"><span>{item.meta[0]}</span><span>{item.meta[1]}</span></div><h2>{item.title}</h2><p>{item.text}</p><span className="feature-link">{item.action} <span aria-hidden="true">{item.external ? "↗" : "→"}</span></span>
               </a>
             ))}</div>
             <a className="section-more" href={writingPath[language]}>{copy.allWriting} <span aria-hidden="true">→</span></a>
