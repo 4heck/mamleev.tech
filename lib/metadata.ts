@@ -79,9 +79,12 @@ export function buildMetadata(language: Language, page: Page = "home"): Metadata
     },
     // /favicon.ico is what crawlers and older browsers request by convention;
     // without it every bot pass left a 404 in the access log.
+    // Yandex asks for an SVG or a 120x120 PNG; it had fetched the SVG yet still
+    // served a blank placeholder for the domain, so both are declared.
     icons: {
       icon: [
         { url: "/favicon.svg", type: "image/svg+xml" },
+        { url: "/favicon-120x120.png", sizes: "120x120", type: "image/png" },
         { url: "/favicon.ico", sizes: "any" },
       ],
       shortcut: "/favicon.ico",
