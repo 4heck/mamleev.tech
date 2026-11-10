@@ -486,3 +486,62 @@ main[data-language="ru"] .hero h1 { font-size: clamp(3.6rem, 5.8vw, 7rem); }
   .article-original { padding: 22px; }
   .article-body p { font-size: 16px; }
 }
+
+/* Talks & teaching: server-rendered topics and a reusable organiser bio. */
+.speaking-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, .45fr);
+  gap: clamp(36px, 5vw, 72px);
+  align-items: center;
+  padding-block: 72px;
+  border-bottom: 1px solid var(--line);
+}
+.speaking-intro h1 { font-size: clamp(2.5rem, 5.8vw, 5.8rem); line-height: .98; letter-spacing: -.05em; }
+.speaking-intro .eyebrow { line-height: 1.6; }
+.speaking-portrait img { width: 100%; aspect-ratio: 1; object-fit: cover; filter: saturate(.88); box-shadow: 12px 12px 0 var(--blue); }
+.speaking-portrait figcaption { margin-top: 26px; font-size: 12px; line-height: 1.5; color: var(--muted); }
+.speaking-portrait a { border-bottom: 1px solid var(--line); }
+.speaking-section-title { font-size: clamp(1.8rem, 3vw, 2.7rem); font-weight: 700; line-height: 1.08; letter-spacing: -.04em; }
+.speaking-topics { display: grid; gap: 24px; min-width: 0; }
+.speaking-topics > h2 { margin-bottom: 12px; }
+.talk-card { padding: 32px; border: 1px solid var(--line); background: var(--paper-bright); }
+.talk-card h3 { max-width: 28ch; font-size: clamp(1.6rem, 2.6vw, 2.5rem); font-weight: 700; line-height: 1.08; letter-spacing: -.035em; }
+.talk-facts { grid-template-columns: 1.3fr 1fr 1fr; margin-top: 24px; }
+.talk-points-label { margin-top: 26px; font-size: 13px; font-weight: 700; }
+.talk-points { display: grid; gap: 12px; margin-top: 14px; padding-left: 20px; list-style: disc; }
+.talk-points li { padding-left: 4px; font-size: 15px; line-height: 1.65; }
+.talk-points li::marker { color: var(--blue); }
+.talk-sources { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--line); }
+.talk-sources p { font-size: 11px; color: var(--muted); }
+.talk-sources ul { display: grid; gap: 10px; margin-top: 10px; }
+.talk-sources a { font-size: 13px; line-height: 1.5; border-bottom: 1px solid var(--line); }
+.talk-sources a:hover, .speaking-portrait a:hover { color: var(--blue); }
+.speaking-copy { max-width: 800px; }
+.speaking-copy > p, .speaking-contact > p { margin-top: 24px; font-size: 17px; line-height: 1.7; }
+.speaking-copy .section-more { line-height: 1.6; }
+.speaking-contact { padding-block: 72px; border-bottom: 1px solid var(--line); }
+.speaking-contact > h2, .speaking-contact > p { max-width: 760px; }
+.speaking-contact .button { margin-top: 28px; }
+
+@media (max-width: 1100px) {
+  .site-header nav { gap: 20px; }
+  .header-actions { gap: 20px; }
+}
+
+@media (max-width: 900px) {
+  .speaking-intro { grid-template-columns: minmax(0, 1fr) minmax(180px, .5fr); padding-block: 56px; gap: 32px; }
+  .speaking-intro h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+  .speaking-intro .hero-lede { font-size: 1.05rem; }
+  .talk-card { padding: 24px; }
+}
+
+@media (max-width: 560px) {
+  .speaking-intro { grid-template-columns: 1fr; gap: 40px; }
+  .speaking-intro h1 { font-size: clamp(2rem, 9vw, 3rem); }
+  .speaking-portrait { width: min(80%, 280px); }
+  .talk-card { padding: 22px 18px; }
+  .talk-card h3 { font-size: 1.6rem; }
+  .talk-facts { grid-template-columns: 1fr; }
+  .speaking-copy > p, .speaking-contact > p { font-size: 16px; }
+  .speaking-contact { padding-block: 56px; }
+}

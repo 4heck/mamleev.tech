@@ -38,7 +38,7 @@ export default function Article({ language, slug }: { language: Language; slug: 
           <dl className="writing-facts">
             <div>
               <dt>{copy.writing.authorLabel}</dt>
-              <dd>{copy.writing.authorName}</dd>
+              <dd>{copy.writing.articleAuthorName}</dd>
             </div>
             <div>
               <dt>{copy.writing.publishedLabel}</dt>

@@ -1,4 +1,4 @@
-import { content, localePath, LANGUAGES, socialLinks, writingPath, type Language } from "@/lib/content";
+import { content, localePath, LANGUAGES, socialLinks, speakingPath, writingPath, type Language } from "@/lib/content";
 
 // Header and footer are shared by the home page and the writing page. `paths`
 // is the current route in each locale, so the language switcher stays on the
@@ -20,7 +20,11 @@ export function SiteHeader({
       </a>
       <div className="header-actions">
         <nav aria-label={language === "ru" ? "Основная навигация" : "Primary navigation"}>
-          <a href={`${basePath}#about`}>{copy.nav[0]}</a><a href={`${basePath}#work`}>{copy.nav[1]}</a><a href={writingPath[language]}>{copy.nav[2]}</a><a href={`${basePath}#contact`}>{copy.nav[3]}</a>
+          <a href={`${basePath}#about`}>{copy.nav[0]}</a>
+          <a href={`${basePath}#work`}>{copy.nav[1]}</a>
+          <a href={writingPath[language]}>{copy.nav[2]}</a>
+          <a href={speakingPath[language]}>{copy.nav[3]}</a>
+          <a href={`${basePath}#contact`}>{copy.nav[4]}</a>
         </nav>
         <div className="lang-list">
           {LANGUAGES.map((code) => (
@@ -45,6 +49,7 @@ export function SiteFooter({ language }: { language: Language }) {
     <footer className="footer shell">
       <p>© 2026 {content[language].footer}</p>
       <div className="footer-links">
+        <a href={speakingPath[language]}>{content[language].nav[3]}</a>
         {socialLinks.map(([label, href]) => (
           <a key={label} href={href} target="_blank" rel="noreferrer">{label} <span aria-hidden="true">↗</span></a>
         ))}

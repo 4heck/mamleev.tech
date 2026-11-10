@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { SITE_URL, articlePath, content, localePath, publications, writingPath, type Language } from "./content";
+import { SITE_URL, articlePath, content, localePath, publications, speakingPath, writingPath, type Language } from "./content";
 import { summaries } from "./articles";
+import { PRACTICUM_URL, speaking } from "./speaking";
 
 // Per-locale snippet copy. The root page keeps the name in both scripts so it
 // can match Cyrillic name queries; the Russian page is written in Russian
@@ -17,7 +18,7 @@ const seo = {
     locale: "en_US",
   },
   ru: {
-    title: "Руслан Мамлеев — CTO, Software Architect & Tech Mentor",
+    title: "Руслан Фаилевич Мамлеев — CTO GetFloorPlan и архитектор ПО",
     description:
       "Руслан Фаилевич Мамлеев — CTO GetFloorPlan, software architect и IT-ментор. AI, PropTech, распределённые системы, Python, Go и Kubernetes.",
     ogTitle: "Руслан Мамлеев — CTO & Software Architect",
@@ -56,12 +57,23 @@ const keywords = [
   "PropTech",
 ];
 
-export type Page = "home" | "writing";
+export type Page = "home" | "writing" | "speaking";
 
 export function buildMetadata(language: Language, page: Page = "home"): Metadata {
   const home = page === "home";
-  const copy = home ? seo[language] : { ...seo[language], ...writingSeo[language] };
-  const paths = home ? localePath : writingPath;
+  const speakingCopy = speaking[language];
+  const pageSeo = {
+    home: seo[language],
+    writing: writingSeo[language],
+    speaking: {
+      title: `${speakingCopy.title} — ${speakingCopy.name}`,
+      description: speakingCopy.description,
+      ogTitle: `${speakingCopy.title} — ${speakingCopy.name}`,
+      ogDescription: speakingCopy.description,
+    },
+  };
+  const copy = { ...seo[language], ...pageSeo[page] };
+  const paths = { home: localePath, writing: writingPath, speaking: speakingPath }[page];
   const path = paths[language];
 
   return {
@@ -259,6 +271,32 @@ export function writingSchema(language: Language) {
       },
       person,
       ...nodes,
+    ],
+  };
+}
+
+// These are proposed sessions, not dated events or a record of past talks.
+// The page shares the same Person identity as the home and writing routes.
+export function speakingSchema(language: Language) {
+  const copy = speaking[language];
+  const pageUrl = `${SITE_URL}${speakingPath[language]}`;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${pageUrl}#webpage`,
+        url: pageUrl,
+        inLanguage: language,
+        name: copy.title,
+        description: copy.description,
+        about: { "@id": PERSON_ID },
+        mainEntity: { "@id": PERSON_ID },
+        isPartOf: { "@id": `${SITE_URL}${localePath[language]}` },
+        relatedLink: PRACTICUM_URL,
+      },
+      person,
     ],
   };
 }

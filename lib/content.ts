@@ -13,11 +13,16 @@ export const localePath: Record<Language, string> = {
   ru: "/ru/",
 };
 
-// Second indexable route per locale. Kept next to localePath so the sitemap,
+// Index routes per locale. Kept next to localePath so the sitemap,
 // hreflang and the language switcher all read the same map.
 export const writingPath: Record<Language, string> = {
   en: "/writing/",
   ru: "/ru/writing/",
+};
+
+export const speakingPath: Record<Language, string> = {
+  en: "/speaking/",
+  ru: "/ru/speaking/",
 };
 
 // Each publication has its own summary page under the writing route, in both
@@ -69,7 +74,7 @@ export const publications: Publication[] = [
 
 export const content = {
   en: {
-    nav: ["About", "Work", "Writing", "Contact"],
+    nav: ["About", "Work", "Writing", "Talks & teaching", "Contact"],
     name: "Руслан Мамлеев",
     role: "CTO & Software Architect",
     headline: "I build systems that turn ambitious products into reliable businesses.",
@@ -143,6 +148,7 @@ export const content = {
       venueLabel: "Published on",
       authorLabel: "Author",
       authorName: "Ruslan Mamleev · CTO & Software Architect",
+      articleAuthorName: "Ruslan Mamleev · CTO & Software Architect",
       readSummary: "Read the summary",
       allPublications: "All publications",
       homeCrumb: "Home",
@@ -161,7 +167,7 @@ export const content = {
     footer: "Ruslan Mamleev · CTO & Software Architect",
   },
   ru: {
-    nav: ["Обо мне", "Опыт", "Публикации", "Контакты"],
+    nav: ["Обо мне", "Опыт", "Публикации", "Выступления", "Контакты"],
     name: "Руслан Мамлеев",
     role: "CTO и архитектор ПО",
     headline: "Строю системы, которые превращают амбициозные продукты в надёжный бизнес.",
@@ -235,6 +241,7 @@ export const content = {
       venueLabel: "Площадка",
       authorLabel: "Автор",
       authorName: "Руслан Мамлеев · CTO и архитектор ПО",
+      articleAuthorName: "Руслан Фаилевич Мамлеев · CTO и архитектор ПО",
       readSummary: "Читать разбор",
       allPublications: "Все публикации",
       homeCrumb: "Главная",

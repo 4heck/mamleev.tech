@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { LANGUAGES, SITE_URL, articlePath, localePath, publications, writingPath, type Language } from "@/lib/content";
+import { LANGUAGES, SITE_URL, articlePath, localePath, publications, speakingPath, writingPath, type Language } from "@/lib/content";
 
 // Every indexable URL in both locales, each entry pointing at its counterpart
 // through alternates so Google pairs them instead of treating one as a duplicate.
@@ -25,6 +25,7 @@ function localized(
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     ...localized(localePath, { priority: [1, 0.9] }),
+    ...localized(speakingPath, { priority: [0.8, 0.8] }),
     ...localized(writingPath, {
       priority: [0.8, 0.7],
       lastModified: newest(publications.flatMap((item) => [item.dateModified, item.summaryPublished])),
